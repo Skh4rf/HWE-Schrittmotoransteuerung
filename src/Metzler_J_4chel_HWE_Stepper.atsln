@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper_Scope1", "Metzler_J_4chel_HWE_Stepper_Scope1\Metzler_J_4chel_HWE_Stepper_Scope1.cproj", "{B1653965-238B-4823-AE12-EB8E560DAB6C}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper_Scope2", "Metzler_J_4chel_HWE_Stepper_Scope2\Metzler_J_4chel_HWE_Stepper_Scope2.cproj", "{78CB74C3-86F8-4AA0-9671-0473B8185C5A}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper_Scope3", "Metzler_J_4chel_HWE_Stepper_Scope3_02\Metzler_J_4chel_HWE_Stepper_Scope3.cproj", "{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1653965-238B-4823-AE12-EB8E560DAB6C}.Debug|AVR.ActiveCfg = Debug|AVR
+		{B1653965-238B-4823-AE12-EB8E560DAB6C}.Debug|AVR.Build.0 = Debug|AVR
+		{B1653965-238B-4823-AE12-EB8E560DAB6C}.Release|AVR.ActiveCfg = Release|AVR
+		{B1653965-238B-4823-AE12-EB8E560DAB6C}.Release|AVR.Build.0 = Release|AVR
+		{78CB74C3-86F8-4AA0-9671-0473B8185C5A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{78CB74C3-86F8-4AA0-9671-0473B8185C5A}.Debug|AVR.Build.0 = Debug|AVR
+		{78CB74C3-86F8-4AA0-9671-0473B8185C5A}.Release|AVR.ActiveCfg = Release|AVR
+		{78CB74C3-86F8-4AA0-9671-0473B8185C5A}.Release|AVR.Build.0 = Release|AVR
+		{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}.Debug|AVR.ActiveCfg = Debug|AVR
+		{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}.Debug|AVR.Build.0 = Debug|AVR
+		{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}.Release|AVR.ActiveCfg = Release|AVR
+		{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

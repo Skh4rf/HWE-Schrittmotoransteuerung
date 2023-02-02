@@ -1,0 +1,722 @@
+
+Metzler_J_4chel_HWE_Stepper_Scope2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003f0  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000464  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000002e  00800060  00800060  00000464  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000464  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000494  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000070  00000000  00000000  000004d0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000cd7  00000000  00000000  00000540  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000007bd  00000000  00000000  00001217  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000709  00000000  00000000  000019d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000f8  00000000  00000000  000020e0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000436  00000000  00000000  000021d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000005e7  00000000  00000000  0000260e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000068  00000000  00000000  00002bf5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__vector_19>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	ae 38       	cpi	r26, 0x8E	; 142
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 05 01 	call	0x20a	; 0x20a <main>
+  74:	0c 94 f6 01 	jmp	0x3ec	; 0x3ec <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <__vector_19>:
+/**************************************************************************************/
+/* Interruptroutine der Signalerzeugung und Schrittzählung							  */
+/* Falls nsteps nicht 0 --> automatisch Schrittmodus								  */
+/*																					  */
+/* swScaler - Variable kann zur Frequenzänderung verwendet werden					  */
+ISR (TIMER0_COMP_vect){	// Timer Compare Match Interrupt-Routine
+  7c:	1f 92       	push	r1
+  7e:	0f 92       	push	r0
+  80:	0f b6       	in	r0, 0x3f	; 63
+  82:	0f 92       	push	r0
+  84:	11 24       	eor	r1, r1
+  86:	2f 93       	push	r18
+  88:	3f 93       	push	r19
+  8a:	8f 93       	push	r24
+  8c:	9f 93       	push	r25
+	if (counter == swScaler){					// Softwareteiler erreicht?
+  8e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  92:	81 11       	cpse	r24, r1
+  94:	28 c0       	rjmp	.+80     	; 0xe6 <__vector_19+0x6a>
+		if(nsteps != 0 && nsteps <= steps){		// Falls Betrieb mit vorgeschriebener Schrittzahl und Schrittzahl erreicht
+  96:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <nsteps>
+  9a:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <nsteps+0x1>
+  9e:	00 97       	sbiw	r24, 0x00	; 0
+  a0:	69 f0       	breq	.+26     	; 0xbc <__vector_19+0x40>
+  a2:	20 91 64 00 	lds	r18, 0x0064	; 0x800064 <steps>
+  a6:	30 91 65 00 	lds	r19, 0x0065	; 0x800065 <steps+0x1>
+  aa:	28 17       	cp	r18, r24
+  ac:	39 07       	cpc	r19, r25
+  ae:	34 f0       	brlt	.+12     	; 0xbc <__vector_19+0x40>
+			nsteps = 0;							// vorgeschriebene Schrittzahl zurücksetzen (Warteschleife in NSteps-Routinen wird abgebrochen)
+  b0:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <nsteps+0x1>
+  b4:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <nsteps>
+			TCCR0 = 0x00;						// Timer0 stoppen
+  b8:	13 be       	out	0x33, r1	; 51
+  ba:	18 c0       	rjmp	.+48     	; 0xec <__vector_19+0x70>
+		}else{
+			OUTPORT ^= (1<<CLOCKPIN);			// Clock-Pin Toggeln zur Frequenzerzeugung
+  bc:	98 b3       	in	r25, 0x18	; 24
+  be:	88 e0       	ldi	r24, 0x08	; 8
+  c0:	89 27       	eor	r24, r25
+  c2:	88 bb       	out	0x18, r24	; 24
+			counter = 0;						// Softwareteiler-Zählvariable zurücksetzen
+  c4:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+			steps += stepsInkrementor;			// Schrittzähler im stepsInkrementor in- bzw. dekrementieren
+  c8:	20 91 61 00 	lds	r18, 0x0061	; 0x800061 <stepsInkrementor>
+  cc:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <steps>
+  d0:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <steps+0x1>
+  d4:	82 0f       	add	r24, r18
+  d6:	91 1d       	adc	r25, r1
+  d8:	27 fd       	sbrc	r18, 7
+  da:	9a 95       	dec	r25
+  dc:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <steps+0x1>
+  e0:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <steps>
+  e4:	03 c0       	rjmp	.+6      	; 0xec <__vector_19+0x70>
+		}
+	}else{counter++;}							// Softwareteiler-Zählvariable inkrementieren
+  e6:	8f 5f       	subi	r24, 0xFF	; 255
+  e8:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+}
+  ec:	9f 91       	pop	r25
+  ee:	8f 91       	pop	r24
+  f0:	3f 91       	pop	r19
+  f2:	2f 91       	pop	r18
+  f4:	0f 90       	pop	r0
+  f6:	0f be       	out	0x3f, r0	; 63
+  f8:	0f 90       	pop	r0
+  fa:	1f 90       	pop	r1
+  fc:	18 95       	reti
+
+000000fe <clockInit>:
+/* Initialisieren der Clock zur Signalerzeugung am Clk-Pin							  */
+/* Timer0 -> Mode: CTC, Vorteiler 64, Interruptsfreigabe (global & spezifisch)		  */
+/*																					  */
+/* HSCALER kann zur Veränderung der Signalfrequenz verwendet werden					  */
+void clockInit(){
+	OUTPORTDDR |= (1<<CLOCKPIN);				// Clock-Pin-Datenrichtung als Ausgang definieren
+  fe:	87 b3       	in	r24, 0x17	; 23
+ 100:	88 60       	ori	r24, 0x08	; 8
+ 102:	87 bb       	out	0x17, r24	; 23
+	OCR0 = HSCALER;								// OCR0 auf Hardwarescaler-Define setzen
+ 104:	83 e6       	ldi	r24, 0x63	; 99
+ 106:	8c bf       	out	0x3c, r24	; 60
+	TCCR0 = (1<<CS00) | (1<<CS01) | (1<<WGM01); // Timer0 konfigurieren --> Mode: CTC, Vorteiler: 64
+ 108:	8b e0       	ldi	r24, 0x0B	; 11
+ 10a:	83 bf       	out	0x33, r24	; 51
+	TIMSK = (1<<OCIE0);							// OCIE0-Match Interrupt spezifisch freigeben
+ 10c:	82 e0       	ldi	r24, 0x02	; 2
+ 10e:	89 bf       	out	0x39, r24	; 57
+	sei();										// Interrupts global freigeben
+ 110:	78 94       	sei
+ 112:	08 95       	ret
+
+00000114 <moveStop>:
+/* Motorbewegung stoppen															  */
+/*																					  */
+/* Rückgabe: Schritte der letzten Aktion bis zur Ausführung dieser Routine			  */
+/*		(Rückwärts < 0 < Vorwärts)							    					  */
+int16_t moveStop(){								
+	OUTPORT &= ~(1<<CLOCKPIN);	// Clock-Pin auf Low-Level setzen
+ 114:	88 b3       	in	r24, 0x18	; 24
+ 116:	87 7f       	andi	r24, 0xF7	; 247
+ 118:	88 bb       	out	0x18, r24	; 24
+	TCCR0 = 0x00;				// Timer0 stoppen
+ 11a:	13 be       	out	0x33, r1	; 51
+	int16_t s = steps;			// Schrittzählvariable zwischenspeichern
+ 11c:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <steps>
+ 120:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <steps+0x1>
+	steps = 0;					// Schrittzählvariable zurücksetzen
+ 124:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <steps+0x1>
+ 128:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <steps>
+	return s;					// gezählte Schritte der letzten Bewegung zurückgeben (Rückwärts < 0 < Vorwärts)
+}
+ 12c:	08 95       	ret
+
+0000012e <moveForward>:
+/**************************************************************************************/
+/* Motorbewegung vorwärts bis zu neuer Anweisung									  */
+/*																					  */
+/* Rückgabe: Schritte der letzten Aktion bis zur Ausführung dieser Routine			  */
+/*		(Rückwärts < 0 < Vorwärts)							    					  */
+int16_t moveForward(){
+ 12e:	cf 93       	push	r28
+ 130:	df 93       	push	r29
+	int16_t s = moveStop();		// Motor stoppen und Schrittzahl der letzten Bewegung zwischenspeichern
+ 132:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+ 136:	ec 01       	movw	r28, r24
+	OUTPORTDDR |= (1<<DIRPIN);	// Richtungs-Pin im Datenrichtungsregister als Ausgang definieren
+ 138:	87 b3       	in	r24, 0x17	; 23
+ 13a:	84 60       	ori	r24, 0x04	; 4
+ 13c:	87 bb       	out	0x17, r24	; 23
+	OUTPORT |= (1<<DIRPIN);     // Richtungs-Pin auf High setzen
+ 13e:	88 b3       	in	r24, 0x18	; 24
+ 140:	84 60       	ori	r24, 0x04	; 4
+ 142:	88 bb       	out	0x18, r24	; 24
+	stepsInkrementor = 1;		// Schrittzähl-Inkrementor auf 1 setzen
+ 144:	81 e0       	ldi	r24, 0x01	; 1
+ 146:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <stepsInkrementor>
+	clockInit();				// Timer0 initialisieren (--> Bewegung starten)
+ 14a:	0e 94 7f 00 	call	0xfe	; 0xfe <clockInit>
+	return s;					// Schrittzahl der letzten Bewegung zurückgeben (Rückwärts < 0 < Vorwärts)
+}
+ 14e:	ce 01       	movw	r24, r28
+ 150:	df 91       	pop	r29
+ 152:	cf 91       	pop	r28
+ 154:	08 95       	ret
+
+00000156 <moveBackward>:
+/**************************************************************************************/
+/* Motorbewegung rückwärts bis zu neuer Anweisung									  */
+/*																					  */
+/* Rückgabe: Schritte der letzten Aktion bis zur Ausführung dieser Routine			  */
+/*		(Rückwärts < 0 < Vorwärts)							    					  */
+int16_t moveBackward(){			
+ 156:	cf 93       	push	r28
+ 158:	df 93       	push	r29
+	int16_t s = moveStop();		// Motor stoppen und Schrittzahl der letzen Bewegung zwischenspeichern
+ 15a:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+ 15e:	ec 01       	movw	r28, r24
+	OUTPORTDDR |= (1<<DIRPIN);  // Richtungs-Pin im Datenrichtungsregister als Ausgang definieren
+ 160:	87 b3       	in	r24, 0x17	; 23
+ 162:	84 60       	ori	r24, 0x04	; 4
+ 164:	87 bb       	out	0x17, r24	; 23
+	OUTPORT &= ~(1<<DIRPIN);    // Richtungs-Pin auf Low setzen
+ 166:	88 b3       	in	r24, 0x18	; 24
+ 168:	8b 7f       	andi	r24, 0xFB	; 251
+ 16a:	88 bb       	out	0x18, r24	; 24
+	stepsInkrementor = -1;		// Schrittzähl-Inkrementor auf -1 setzen
+ 16c:	8f ef       	ldi	r24, 0xFF	; 255
+ 16e:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <stepsInkrementor>
+	clockInit();				// Timer0 initialisieren (--> Bewegung starten)
+ 172:	0e 94 7f 00 	call	0xfe	; 0xfe <clockInit>
+	return s;					// Schrittzahl der letzen Bewegung zurückgeben (Rückwärts < 0 < Vorwärts)
+}
+ 176:	ce 01       	movw	r24, r28
+ 178:	df 91       	pop	r29
+ 17a:	cf 91       	pop	r28
+ 17c:	08 95       	ret
+
+0000017e <moveNStepsForward>:
+
+/**************************************************************************************/
+/* Motorbewegung vorwärts für n Schritte (bzw. Mikroschritte je nach Treiber config)  */
+/*																					  */
+/* Eingabeparameter: Auszuführende Schrittanzahl									  */
+void moveNStepsForward(uint16_t n){
+ 17e:	cf 93       	push	r28
+ 180:	df 93       	push	r29
+ 182:	ec 01       	movw	r28, r24
+	moveStop();							// Motor stoppen
+ 184:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+	OUTPORTDDR |= (1<<DIRPIN);			// Richtungs-Pin im Datenrichtungsregister als Ausgang definieren
+ 188:	87 b3       	in	r24, 0x17	; 23
+ 18a:	84 60       	ori	r24, 0x04	; 4
+ 18c:	87 bb       	out	0x17, r24	; 23
+	OUTPORT |= (1<<DIRPIN);				// Richtungs-Pin auf High setzen
+ 18e:	88 b3       	in	r24, 0x18	; 24
+ 190:	84 60       	ori	r24, 0x04	; 4
+ 192:	88 bb       	out	0x18, r24	; 24
+	stepsInkrementor = 1;				// Schrittzähl Inkrementor auf 1 setzen
+ 194:	81 e0       	ldi	r24, 0x01	; 1
+ 196:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <stepsInkrementor>
+	nsteps = n;							// Soll-Schrittvariable auf übergebenen Wert setzen
+ 19a:	d0 93 63 00 	sts	0x0063, r29	; 0x800063 <nsteps+0x1>
+ 19e:	c0 93 62 00 	sts	0x0062, r28	; 0x800062 <nsteps>
+	clockInit();						// Timer0 initialiseren (--> Bewegung starten)
+ 1a2:	0e 94 7f 00 	call	0xfe	; 0xfe <clockInit>
+	while(nsteps != 0){_delay_us(1);}	// warten bis Schritte gefahren wurden
+ 1a6:	03 c0       	rjmp	.+6      	; 0x1ae <moveNStepsForward+0x30>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1a8:	84 e0       	ldi	r24, 0x04	; 4
+ 1aa:	8a 95       	dec	r24
+ 1ac:	f1 f7       	brne	.-4      	; 0x1aa <moveNStepsForward+0x2c>
+ 1ae:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <nsteps>
+ 1b2:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <nsteps+0x1>
+ 1b6:	89 2b       	or	r24, r25
+ 1b8:	b9 f7       	brne	.-18     	; 0x1a8 <moveNStepsForward+0x2a>
+	moveStop();							// Bewegung stoppen
+ 1ba:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+}
+ 1be:	df 91       	pop	r29
+ 1c0:	cf 91       	pop	r28
+ 1c2:	08 95       	ret
+
+000001c4 <moveNStepsBackward>:
+
+/**************************************************************************************/
+/* Motorbewegung rückwärts für n Schritte (bzw. Mikroschritte je nach Treiber config) */
+/*																					  */
+/* Eingabeparameter: Auszuführende Schrittanzahl									  */
+void moveNStepsBackward(uint16_t n){
+ 1c4:	cf 93       	push	r28
+ 1c6:	df 93       	push	r29
+ 1c8:	ec 01       	movw	r28, r24
+	moveStop();							// Motor stoppen
+ 1ca:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+	OUTPORTDDR |= (1<<DIRPIN);			// Richtungs-Pin im Datenrichtungsregister als Ausgang definieren
+ 1ce:	87 b3       	in	r24, 0x17	; 23
+ 1d0:	84 60       	ori	r24, 0x04	; 4
+ 1d2:	87 bb       	out	0x17, r24	; 23
+	OUTPORT &= ~(1<<DIRPIN);			// Richtungs-Pin auf Low setzen
+ 1d4:	88 b3       	in	r24, 0x18	; 24
+ 1d6:	8b 7f       	andi	r24, 0xFB	; 251
+ 1d8:	88 bb       	out	0x18, r24	; 24
+	stepsInkrementor = 1;				// Schrittzähl Inkrementor auf 1 setzen
+ 1da:	81 e0       	ldi	r24, 0x01	; 1
+ 1dc:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <stepsInkrementor>
+	nsteps = n;							// Soll-Schrittvariable auf übergebenen Wert setzen
+ 1e0:	d0 93 63 00 	sts	0x0063, r29	; 0x800063 <nsteps+0x1>
+ 1e4:	c0 93 62 00 	sts	0x0062, r28	; 0x800062 <nsteps>
+	clockInit();						// Timer0 initialisieren (--> Bewegung starten) 
+ 1e8:	0e 94 7f 00 	call	0xfe	; 0xfe <clockInit>
+	while(nsteps != 0){_delay_us(1);}	// warten bis Schritte gefahren wurden
+ 1ec:	03 c0       	rjmp	.+6      	; 0x1f4 <moveNStepsBackward+0x30>
+ 1ee:	84 e0       	ldi	r24, 0x04	; 4
+ 1f0:	8a 95       	dec	r24
+ 1f2:	f1 f7       	brne	.-4      	; 0x1f0 <moveNStepsBackward+0x2c>
+ 1f4:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <nsteps>
+ 1f8:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <nsteps+0x1>
+ 1fc:	89 2b       	or	r24, r25
+ 1fe:	b9 f7       	brne	.-18     	; 0x1ee <moveNStepsBackward+0x2a>
+	moveStop();							// Bewegung stoppen
+ 200:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+}
+ 204:	df 91       	pop	r29
+ 206:	cf 91       	pop	r28
+ 208:	08 95       	ret
+
+0000020a <main>:
+#include <util/delay.h>
+#include "jm_steppertmc2209.h"
+
+int main(void)
+{
+	DDRA = 0x00;
+ 20a:	1a ba       	out	0x1a, r1	; 26
+	PORTA = 0x0F;
+ 20c:	8f e0       	ldi	r24, 0x0F	; 15
+ 20e:	8b bb       	out	0x1b, r24	; 27
+	DDRC = 0xF0;
+ 210:	80 ef       	ldi	r24, 0xF0	; 240
+ 212:	84 bb       	out	0x14, r24	; 20
+	PORTC = 0x00;
+ 214:	15 ba       	out	0x15, r1	; 21
+	static int16_t sequence[20];
+	for (int i = 0; i < 20; i++){ sequence[i] = 0;}
+ 216:	80 e0       	ldi	r24, 0x00	; 0
+ 218:	90 e0       	ldi	r25, 0x00	; 0
+ 21a:	08 c0       	rjmp	.+16     	; 0x22c <main+0x22>
+ 21c:	fc 01       	movw	r30, r24
+ 21e:	ee 0f       	add	r30, r30
+ 220:	ff 1f       	adc	r31, r31
+ 222:	ea 59       	subi	r30, 0x9A	; 154
+ 224:	ff 4f       	sbci	r31, 0xFF	; 255
+ 226:	11 82       	std	Z+1, r1	; 0x01
+ 228:	10 82       	st	Z, r1
+ 22a:	01 96       	adiw	r24, 0x01	; 1
+ 22c:	84 31       	cpi	r24, 0x14	; 20
+ 22e:	91 05       	cpc	r25, r1
+ 230:	ac f3       	brlt	.-22     	; 0x21c <main+0x12>
+ 232:	00 e0       	ldi	r16, 0x00	; 0
+ 234:	10 e0       	ldi	r17, 0x00	; 0
+	uint16_t index = 0;
+
+	while(1){
+		if (!(PINA & (1<<PA0))){
+ 236:	c8 99       	sbic	0x19, 0	; 25
+ 238:	25 c0       	rjmp	.+74     	; 0x284 <main+0x7a>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 23a:	8f e2       	ldi	r24, 0x2F	; 47
+ 23c:	95 e7       	ldi	r25, 0x75	; 117
+ 23e:	01 97       	sbiw	r24, 0x01	; 1
+ 240:	f1 f7       	brne	.-4      	; 0x23e <main+0x34>
+ 242:	00 c0       	rjmp	.+0      	; 0x244 <main+0x3a>
+ 244:	00 00       	nop
+			_delay_ms(10);
+			while(!(PINA & (1<<PA0))) {;}
+ 246:	c8 9b       	sbis	0x19, 0	; 25
+ 248:	fe cf       	rjmp	.-4      	; 0x246 <main+0x3c>
+ 24a:	8f e2       	ldi	r24, 0x2F	; 47
+ 24c:	95 e7       	ldi	r25, 0x75	; 117
+ 24e:	01 97       	sbiw	r24, 0x01	; 1
+ 250:	f1 f7       	brne	.-4      	; 0x24e <main+0x44>
+ 252:	00 c0       	rjmp	.+0      	; 0x254 <main+0x4a>
+ 254:	00 00       	nop
+			_delay_ms(10);
+			
+			if (index < 20){
+ 256:	04 31       	cpi	r16, 0x14	; 20
+ 258:	11 05       	cpc	r17, r1
+ 25a:	68 f4       	brcc	.+26     	; 0x276 <main+0x6c>
+				int16_t steps = moveStop();
+ 25c:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+				if (steps != 0){
+ 260:	00 97       	sbiw	r24, 0x00	; 0
+ 262:	49 f0       	breq	.+18     	; 0x276 <main+0x6c>
+					sequence[index] = steps;
+ 264:	f8 01       	movw	r30, r16
+ 266:	ee 0f       	add	r30, r30
+ 268:	ff 1f       	adc	r31, r31
+ 26a:	ea 59       	subi	r30, 0x9A	; 154
+ 26c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 26e:	91 83       	std	Z+1, r25	; 0x01
+ 270:	80 83       	st	Z, r24
+					index++;
+ 272:	0f 5f       	subi	r16, 0xFF	; 255
+ 274:	1f 4f       	sbci	r17, 0xFF	; 255
+				}
+			} 
+			if (index > 19){
+ 276:	04 31       	cpi	r16, 0x14	; 20
+ 278:	11 05       	cpc	r17, r1
+ 27a:	20 f0       	brcs	.+8      	; 0x284 <main+0x7a>
+				moveStop();
+ 27c:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+				PORTC = 0xF0;
+ 280:	80 ef       	ldi	r24, 0xF0	; 240
+ 282:	85 bb       	out	0x15, r24	; 21
+			}
+		}
+		
+		if (!(PINA & (1<<PA1))){
+ 284:	c9 99       	sbic	0x19, 1	; 25
+ 286:	2b c0       	rjmp	.+86     	; 0x2de <main+0xd4>
+ 288:	8f e2       	ldi	r24, 0x2F	; 47
+ 28a:	95 e7       	ldi	r25, 0x75	; 117
+ 28c:	01 97       	sbiw	r24, 0x01	; 1
+ 28e:	f1 f7       	brne	.-4      	; 0x28c <main+0x82>
+ 290:	00 c0       	rjmp	.+0      	; 0x292 <main+0x88>
+ 292:	00 00       	nop
+			_delay_ms(10);
+			while(!(PINA & (1<<PA1))) {;}
+ 294:	c9 9b       	sbis	0x19, 1	; 25
+ 296:	fe cf       	rjmp	.-4      	; 0x294 <main+0x8a>
+ 298:	8f e2       	ldi	r24, 0x2F	; 47
+ 29a:	95 e7       	ldi	r25, 0x75	; 117
+ 29c:	01 97       	sbiw	r24, 0x01	; 1
+ 29e:	f1 f7       	brne	.-4      	; 0x29c <main+0x92>
+ 2a0:	00 c0       	rjmp	.+0      	; 0x2a2 <main+0x98>
+ 2a2:	00 00       	nop
+			_delay_ms(10);
+			
+			if (index < 20){
+ 2a4:	04 31       	cpi	r16, 0x14	; 20
+ 2a6:	11 05       	cpc	r17, r1
+ 2a8:	98 f4       	brcc	.+38     	; 0x2d0 <main+0xc6>
+				int16_t steps;
+				if(index != 19){
+ 2aa:	03 31       	cpi	r16, 0x13	; 19
+ 2ac:	11 05       	cpc	r17, r1
+ 2ae:	19 f0       	breq	.+6      	; 0x2b6 <main+0xac>
+					steps = moveForward();
+ 2b0:	0e 94 97 00 	call	0x12e	; 0x12e <moveForward>
+ 2b4:	02 c0       	rjmp	.+4      	; 0x2ba <main+0xb0>
+				}
+				else{
+					steps = moveStop();
+ 2b6:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+				}
+				if (steps != 0){
+ 2ba:	00 97       	sbiw	r24, 0x00	; 0
+ 2bc:	49 f0       	breq	.+18     	; 0x2d0 <main+0xc6>
+					sequence[index] = steps;
+ 2be:	f8 01       	movw	r30, r16
+ 2c0:	ee 0f       	add	r30, r30
+ 2c2:	ff 1f       	adc	r31, r31
+ 2c4:	ea 59       	subi	r30, 0x9A	; 154
+ 2c6:	ff 4f       	sbci	r31, 0xFF	; 255
+ 2c8:	91 83       	std	Z+1, r25	; 0x01
+ 2ca:	80 83       	st	Z, r24
+					index++;
+ 2cc:	0f 5f       	subi	r16, 0xFF	; 255
+ 2ce:	1f 4f       	sbci	r17, 0xFF	; 255
+				}
+			}
+			if (index > 19) {
+ 2d0:	04 31       	cpi	r16, 0x14	; 20
+ 2d2:	11 05       	cpc	r17, r1
+ 2d4:	20 f0       	brcs	.+8      	; 0x2de <main+0xd4>
+				moveStop();
+ 2d6:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+				PORTC = 0xF0;
+ 2da:	80 ef       	ldi	r24, 0xF0	; 240
+ 2dc:	85 bb       	out	0x15, r24	; 21
+			}
+		}
+		
+		if (!(PINA & (1<<PA2))){
+ 2de:	ca 99       	sbic	0x19, 2	; 25
+ 2e0:	2b c0       	rjmp	.+86     	; 0x338 <main+0x12e>
+ 2e2:	8f e2       	ldi	r24, 0x2F	; 47
+ 2e4:	95 e7       	ldi	r25, 0x75	; 117
+ 2e6:	01 97       	sbiw	r24, 0x01	; 1
+ 2e8:	f1 f7       	brne	.-4      	; 0x2e6 <main+0xdc>
+ 2ea:	00 c0       	rjmp	.+0      	; 0x2ec <main+0xe2>
+ 2ec:	00 00       	nop
+			_delay_ms(10);
+			while(!(PINA & (1<<PA2))) {;}
+ 2ee:	ca 9b       	sbis	0x19, 2	; 25
+ 2f0:	fe cf       	rjmp	.-4      	; 0x2ee <main+0xe4>
+ 2f2:	8f e2       	ldi	r24, 0x2F	; 47
+ 2f4:	95 e7       	ldi	r25, 0x75	; 117
+ 2f6:	01 97       	sbiw	r24, 0x01	; 1
+ 2f8:	f1 f7       	brne	.-4      	; 0x2f6 <main+0xec>
+ 2fa:	00 c0       	rjmp	.+0      	; 0x2fc <main+0xf2>
+ 2fc:	00 00       	nop
+			_delay_ms(10);
+			
+			if (index < 20){
+ 2fe:	04 31       	cpi	r16, 0x14	; 20
+ 300:	11 05       	cpc	r17, r1
+ 302:	98 f4       	brcc	.+38     	; 0x32a <main+0x120>
+				int16_t steps;
+				if(index != 19){
+ 304:	03 31       	cpi	r16, 0x13	; 19
+ 306:	11 05       	cpc	r17, r1
+ 308:	19 f0       	breq	.+6      	; 0x310 <main+0x106>
+					steps = moveBackward();
+ 30a:	0e 94 ab 00 	call	0x156	; 0x156 <moveBackward>
+ 30e:	02 c0       	rjmp	.+4      	; 0x314 <main+0x10a>
+				}
+				else{
+					steps = moveStop();
+ 310:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+				}
+				if (steps != 0){
+ 314:	00 97       	sbiw	r24, 0x00	; 0
+ 316:	49 f0       	breq	.+18     	; 0x32a <main+0x120>
+					sequence[index] = steps;
+ 318:	f8 01       	movw	r30, r16
+ 31a:	ee 0f       	add	r30, r30
+ 31c:	ff 1f       	adc	r31, r31
+ 31e:	ea 59       	subi	r30, 0x9A	; 154
+ 320:	ff 4f       	sbci	r31, 0xFF	; 255
+ 322:	91 83       	std	Z+1, r25	; 0x01
+ 324:	80 83       	st	Z, r24
+					index++;
+ 326:	0f 5f       	subi	r16, 0xFF	; 255
+ 328:	1f 4f       	sbci	r17, 0xFF	; 255
+				}
+			}
+			if (index > 19) {
+ 32a:	04 31       	cpi	r16, 0x14	; 20
+ 32c:	11 05       	cpc	r17, r1
+ 32e:	20 f0       	brcs	.+8      	; 0x338 <main+0x12e>
+				moveStop();
+ 330:	0e 94 8a 00 	call	0x114	; 0x114 <moveStop>
+				PORTC = 0xF0;
+ 334:	80 ef       	ldi	r24, 0xF0	; 240
+ 336:	85 bb       	out	0x15, r24	; 21
+			}
+		}
+		
+		if (!(PINA & (1<<PA3))){
+ 338:	cb 99       	sbic	0x19, 3	; 25
+ 33a:	7d cf       	rjmp	.-262    	; 0x236 <main+0x2c>
+ 33c:	8f e2       	ldi	r24, 0x2F	; 47
+ 33e:	95 e7       	ldi	r25, 0x75	; 117
+ 340:	01 97       	sbiw	r24, 0x01	; 1
+ 342:	f1 f7       	brne	.-4      	; 0x340 <main+0x136>
+ 344:	00 c0       	rjmp	.+0      	; 0x346 <main+0x13c>
+ 346:	00 00       	nop
+			_delay_ms(10);
+			while(!(PINA & (1<<PA3))) {;}
+ 348:	cb 9b       	sbis	0x19, 3	; 25
+ 34a:	fe cf       	rjmp	.-4      	; 0x348 <main+0x13e>
+ 34c:	8f e2       	ldi	r24, 0x2F	; 47
+ 34e:	95 e7       	ldi	r25, 0x75	; 117
+ 350:	01 97       	sbiw	r24, 0x01	; 1
+ 352:	f1 f7       	brne	.-4      	; 0x350 <main+0x146>
+ 354:	00 c0       	rjmp	.+0      	; 0x356 <main+0x14c>
+ 356:	00 00       	nop
+			_delay_ms(10);
+			
+			int32_t origin = 0;
+			for (int i = 0; i < 20; i++){
+ 358:	20 e0       	ldi	r18, 0x00	; 0
+ 35a:	30 e0       	ldi	r19, 0x00	; 0
+		if (!(PINA & (1<<PA3))){
+			_delay_ms(10);
+			while(!(PINA & (1<<PA3))) {;}
+			_delay_ms(10);
+			
+			int32_t origin = 0;
+ 35c:	80 e0       	ldi	r24, 0x00	; 0
+ 35e:	90 e0       	ldi	r25, 0x00	; 0
+ 360:	dc 01       	movw	r26, r24
+			for (int i = 0; i < 20; i++){
+ 362:	11 c0       	rjmp	.+34     	; 0x386 <main+0x17c>
+				origin = origin + sequence[i];
+ 364:	f9 01       	movw	r30, r18
+ 366:	ee 0f       	add	r30, r30
+ 368:	ff 1f       	adc	r31, r31
+ 36a:	ea 59       	subi	r30, 0x9A	; 154
+ 36c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 36e:	40 81       	ld	r20, Z
+ 370:	51 81       	ldd	r21, Z+1	; 0x01
+ 372:	05 2e       	mov	r0, r21
+ 374:	00 0c       	add	r0, r0
+ 376:	66 0b       	sbc	r22, r22
+ 378:	77 0b       	sbc	r23, r23
+ 37a:	84 0f       	add	r24, r20
+ 37c:	95 1f       	adc	r25, r21
+ 37e:	a6 1f       	adc	r26, r22
+ 380:	b7 1f       	adc	r27, r23
+			_delay_ms(10);
+			while(!(PINA & (1<<PA3))) {;}
+			_delay_ms(10);
+			
+			int32_t origin = 0;
+			for (int i = 0; i < 20; i++){
+ 382:	2f 5f       	subi	r18, 0xFF	; 255
+ 384:	3f 4f       	sbci	r19, 0xFF	; 255
+ 386:	24 31       	cpi	r18, 0x14	; 20
+ 388:	31 05       	cpc	r19, r1
+ 38a:	64 f3       	brlt	.-40     	; 0x364 <main+0x15a>
+				origin = origin + sequence[i];
+			}
+			
+			if (origin > 0){ 
+ 38c:	18 16       	cp	r1, r24
+ 38e:	19 06       	cpc	r1, r25
+ 390:	1a 06       	cpc	r1, r26
+ 392:	1b 06       	cpc	r1, r27
+ 394:	1c f4       	brge	.+6      	; 0x39c <main+0x192>
+				moveNStepsBackward((int16_t)origin);
+ 396:	0e 94 e2 00 	call	0x1c4	; 0x1c4 <moveNStepsBackward>
+ 39a:	05 c0       	rjmp	.+10     	; 0x3a6 <main+0x19c>
+			} else{
+				moveNStepsForward((int16_t)origin * -1);
+ 39c:	91 95       	neg	r25
+ 39e:	81 95       	neg	r24
+ 3a0:	91 09       	sbc	r25, r1
+ 3a2:	0e 94 bf 00 	call	0x17e	; 0x17e <moveNStepsForward>
+ 3a6:	9f e7       	ldi	r25, 0x7F	; 127
+ 3a8:	2f e4       	ldi	r18, 0x4F	; 79
+ 3aa:	82 e1       	ldi	r24, 0x12	; 18
+ 3ac:	91 50       	subi	r25, 0x01	; 1
+ 3ae:	20 40       	sbci	r18, 0x00	; 0
+ 3b0:	80 40       	sbci	r24, 0x00	; 0
+ 3b2:	e1 f7       	brne	.-8      	; 0x3ac <main+0x1a2>
+ 3b4:	00 c0       	rjmp	.+0      	; 0x3b6 <main+0x1ac>
+ 3b6:	00 00       	nop
+			}
+			_delay_ms(500);
+			
+			for(int i = 0; i < 20; i++){
+ 3b8:	c0 e0       	ldi	r28, 0x00	; 0
+ 3ba:	d0 e0       	ldi	r29, 0x00	; 0
+ 3bc:	13 c0       	rjmp	.+38     	; 0x3e4 <main+0x1da>
+				if (sequence[i] != 0){
+ 3be:	fe 01       	movw	r30, r28
+ 3c0:	ee 0f       	add	r30, r30
+ 3c2:	ff 1f       	adc	r31, r31
+ 3c4:	ea 59       	subi	r30, 0x9A	; 154
+ 3c6:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3c8:	80 81       	ld	r24, Z
+ 3ca:	91 81       	ldd	r25, Z+1	; 0x01
+ 3cc:	00 97       	sbiw	r24, 0x00	; 0
+ 3ce:	49 f0       	breq	.+18     	; 0x3e2 <main+0x1d8>
+					if (sequence[i] > 0){
+ 3d0:	1c f0       	brlt	.+6      	; 0x3d8 <main+0x1ce>
+						moveNStepsForward(sequence[i]);
+ 3d2:	0e 94 bf 00 	call	0x17e	; 0x17e <moveNStepsForward>
+ 3d6:	05 c0       	rjmp	.+10     	; 0x3e2 <main+0x1d8>
+						}else{
+						moveNStepsBackward(sequence[i] * -1);
+ 3d8:	91 95       	neg	r25
+ 3da:	81 95       	neg	r24
+ 3dc:	91 09       	sbc	r25, r1
+ 3de:	0e 94 e2 00 	call	0x1c4	; 0x1c4 <moveNStepsBackward>
+			} else{
+				moveNStepsForward((int16_t)origin * -1);
+			}
+			_delay_ms(500);
+			
+			for(int i = 0; i < 20; i++){
+ 3e2:	21 96       	adiw	r28, 0x01	; 1
+ 3e4:	c4 31       	cpi	r28, 0x14	; 20
+ 3e6:	d1 05       	cpc	r29, r1
+ 3e8:	54 f3       	brlt	.-44     	; 0x3be <main+0x1b4>
+ 3ea:	25 cf       	rjmp	.-438    	; 0x236 <main+0x2c>
+
+000003ec <_exit>:
+ 3ec:	f8 94       	cli
+
+000003ee <__stop_program>:
+ 3ee:	ff cf       	rjmp	.-2      	; 0x3ee <__stop_program>

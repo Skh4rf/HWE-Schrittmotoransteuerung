@@ -1,0 +1,172 @@
+
+Metzler_J_4chel_HWE_Stepper_Scope1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000e8  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000015c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000002  00800060  00800060  0000015c  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000015c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000018c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000038  00000000  00000000  000001c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000623  00000000  00000000  00000200  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000059f  00000000  00000000  00000823  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000022c  00000000  00000000  00000dc2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000068  00000000  00000000  00000ff0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000033d  00000000  00000000  00001058  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000049  00000000  00000000  00001395  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000028  00000000  00000000  000013de  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__vector_19>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a2 36       	cpi	r26, 0x62	; 98
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 6f 00 	call	0xde	; 0xde <main>
+  74:	0c 94 72 00 	jmp	0xe4	; 0xe4 <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <__vector_19>:
+
+static int count = 0; // statische Zählvariable zur Softwareteilung der Frequenz
+
+/**************************************************************************************/
+/* Interrupt-Service-Routine für 1kHz Signal an Pin PB3								  */
+ISR (TIMER0_COMP_vect){		// Timer Compare Match Interrupt-Routine
+  7c:	1f 92       	push	r1
+  7e:	0f 92       	push	r0
+  80:	0f b6       	in	r0, 0x3f	; 63
+  82:	0f 92       	push	r0
+  84:	11 24       	eor	r1, r1
+  86:	8f 93       	push	r24
+  88:	9f 93       	push	r25
+	if (count == 100){		// Hat Zählvariable 100 erreicht?
+  8a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  8e:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  92:	84 36       	cpi	r24, 0x64	; 100
+  94:	91 05       	cpc	r25, r1
+  96:	49 f4       	brne	.+18     	; 0xaa <__vector_19+0x2e>
+		PORTB ^= (1<<PB3);	// Pin PB3 Toggeln
+  98:	98 b3       	in	r25, 0x18	; 24
+  9a:	88 e0       	ldi	r24, 0x08	; 8
+  9c:	89 27       	eor	r24, r25
+  9e:	88 bb       	out	0x18, r24	; 24
+		count = 0;			// Zählvariable zurücksetzen
+  a0:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  a4:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+  a8:	05 c0       	rjmp	.+10     	; 0xb4 <__vector_19+0x38>
+	}else{count++;}			// Zählvariable inkrementieren
+  aa:	01 96       	adiw	r24, 0x01	; 1
+  ac:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  b0:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+}
+  b4:	9f 91       	pop	r25
+  b6:	8f 91       	pop	r24
+  b8:	0f 90       	pop	r0
+  ba:	0f be       	out	0x3f, r0	; 63
+  bc:	0f 90       	pop	r0
+  be:	1f 90       	pop	r1
+  c0:	18 95       	reti
+
+000000c2 <clockInit>:
+
+/**************************************************************************************/
+/* Initialisiert Timer0 zur Clockausgabe an Pin PB3 (f=1kHz)						  */
+void clockInit(){					// 200kHz Interrupt Frequenz 
+	DDRB |= (1<<PB3);				// Clock-Pin-Datenrichtung auf Ausgang
+  c2:	87 b3       	in	r24, 0x17	; 23
+  c4:	88 60       	ori	r24, 0x08	; 8
+  c6:	87 bb       	out	0x17, r24	; 23
+	OCR0 = 59;						// CTC-Mode OCR0=59 mit 1 Vorteiler --> 200kHz Interruptfrequenz hier auf MC angepasst deswegen 58
+  c8:	8b e3       	ldi	r24, 0x3B	; 59
+  ca:	8c bf       	out	0x3c, r24	; 60
+	TCCR0 = (1<<CS00) | (1<<WGM01); // Mode: CTC, Vorteiler: 1
+  cc:	89 e0       	ldi	r24, 0x09	; 9
+  ce:	83 bf       	out	0x33, r24	; 51
+	TIMSK = (1<<OCIE0);				// OCIE0-Match interrupt spezifisch freigeben
+  d0:	82 e0       	ldi	r24, 0x02	; 2
+  d2:	89 bf       	out	0x39, r24	; 57
+	sei();							// Interrupts global freigeben
+  d4:	78 94       	sei
+  d6:	08 95       	ret
+
+000000d8 <moveForward>:
+}
+
+/**************************************************************************************/
+/* Routine um Motor mit konstanter Frequenz zu betreiben (PIN_CLK=PB3; f=1kHz)		´ */
+void moveForward(){
+	clockInit(); // 1kHz auf Pin PB3
+  d8:	0e 94 61 00 	call	0xc2	; 0xc2 <clockInit>
+  dc:	08 95       	ret
+
+000000de <main>:
+}
+
+int main(void)
+{
+    moveForward(); // Motor mit konstanter Frequenz in eine Richtung betreiben
+  de:	0e 94 6c 00 	call	0xd8	; 0xd8 <moveForward>
+  e2:	ff cf       	rjmp	.-2      	; 0xe2 <main+0x4>
+
+000000e4 <_exit>:
+  e4:	f8 94       	cli
+
+000000e6 <__stop_program>:
+  e6:	ff cf       	rjmp	.-2      	; 0xe6 <__stop_program>
