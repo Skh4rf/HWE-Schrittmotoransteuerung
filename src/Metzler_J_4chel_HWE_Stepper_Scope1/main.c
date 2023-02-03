@@ -13,10 +13,11 @@ static int count = 0; // statische Zählvariable zur Softwareteilung der Frequenz
 /**************************************************************************************/
 /* Interrupt-Service-Routine für 1kHz Signal an Pin PB3								  */
 ISR (TIMER0_COMP_vect){		// Timer Compare Match Interrupt-Routine
-	if (count == 99){		// Wurde Zählvariable 100-mal inkrementiert?
+	count++;				// Zählvariable inkrementieren
+	if (count >= 100){		// Wurde Zählvariable 100-mal inkrementiert?
 		PORTB ^= (1<<PB3);	// Pin PB3 Toggeln
 		count = 0;			// Zählvariable zurücksetzen
-	}else{count++;}			// Zählvariable inkrementieren
+	}
 }
 
 /**************************************************************************************/

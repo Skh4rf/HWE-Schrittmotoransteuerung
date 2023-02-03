@@ -36,7 +36,7 @@ ISR (TIMER0_COMP_vect){	// Timer Compare Match Interrupt-Routine
 		}else{
 			OUTPORT ^= (1<<CLOCKPIN);			// Clock-Pin Toggeln zur Frequenzerzeugung
 			counter = 0;						// Softwareteiler-Zählvariable zurücksetzen
-			steps += stepsInkrementor;			// Schrittzähler im stepsInkrementor in- bzw. dekrementieren
+			steps += stepsInkrementor;			// Schrittzähler mit stepsInkrementor in- bzw. dekrementieren
 		}
 	}else{counter++;}							// Softwareteiler-Zählvariable inkrementieren
 }

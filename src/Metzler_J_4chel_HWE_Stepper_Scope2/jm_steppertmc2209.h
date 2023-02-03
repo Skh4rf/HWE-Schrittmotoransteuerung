@@ -2,6 +2,9 @@
 /* Bibliotheksfunktionen zur Schrittmotorsteuerung			*/
 /*		mit TMC2209 Schrittmotor-Controller					*/
 /*															*/
+/* Hinweis: Die Schrittzahl bezieht sich auf die Anzahl der */
+/* ISR-Aufrufe während eine Bewegung und stellt somit die	*/
+/* doppelte Anzahl an Schritten dar.						*/
 /************************************************************/
 
 #define HSCALER 99 // OCR0=99 mit 64 Vorteiler --> 1876Hz Interruptfrequenz (--> Signalfrequenz = 1876/2 = 938Hz)

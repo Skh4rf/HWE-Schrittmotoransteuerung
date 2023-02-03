@@ -7,7 +7,7 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper_Scope2", "Metzler_J_4chel_HWE_Stepper_Scope2\Metzler_J_4chel_HWE_Stepper_Scope2.cproj", "{78CB74C3-86F8-4AA0-9671-0473B8185C5A}"
 EndProject
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper_Scope3", "Metzler_J_4chel_HWE_Stepper_Scope3_02\Metzler_J_4chel_HWE_Stepper_Scope3.cproj", "{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}"
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Metzler_J_4chel_HWE_Stepper_Scope3", "Metzler_J_4chel_HWE_Stepper_Scope3\Metzler_J_4chel_HWE_Stepper_Scope3.cproj", "{D11A03AB-7D15-4DFB-8BBD-73DE2C2F33D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
